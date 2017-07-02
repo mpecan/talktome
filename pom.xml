@@ -48,7 +48,7 @@
 
 		<!-- end of test dependencies -->
 
-		
+
 		<!-- spring boot data rest dependencies -->
 
 		<dependency>
@@ -70,10 +70,18 @@
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>${swagger.release}</version>
 		</dependency>
-		
+
 		<!-- end of swagger dependencies -->
 
 
+		<!-- spring boot web socket dependencies -->
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-websocket</artifactId>
+		</dependency>
+
+		<!-- end of spring boot web socket dependencies -->
 
 	</dependencies>
 </project>
