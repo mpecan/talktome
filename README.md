@@ -4,6 +4,11 @@ Talk to me is a real time chat application from peer to peer. It authenticates b
 ## Requirement
 Java 8 to execute application.
 
+## Build Status
+
+Latest application build status could be traced via https://travis-ci.org/ <br/>
+Actual Status of current branch : [![Build Status](https://travis-ci.org/ibrahimbayer/talktome.svg?branch=master)](https://travis-ci.org/ibrahimbayer/talktome)
+
 ## Running Application
 mvn install "please refer to Maven documentation for setting up mvn on your computer" http://maven.apache.org/install.html<br/>
 mvn spring-boot:run Starts the application
@@ -15,7 +20,3 @@ mvn spring-boot:run Starts the application
 
 ## Security
 There is a simple security implementation. The security is managed via default username "1" and password "1".
-
-## Build Status
-
-[![Build Status](https://travis-ci.org/ibrahimbayer/talktome.svg?branch=master)](https://travis-ci.org/ibrahimbayer/talktome)
