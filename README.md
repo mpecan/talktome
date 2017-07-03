@@ -15,3 +15,7 @@ mvn spring-boot:run Starts the application
 
 ## Security
 There is a simple security implementation. The security is managed via default username "1" and password "1".
+
+## Build Status
+
+[![Build Status](https://travis-ci.org/ibrahimbayer/talktome.svg?branch=master)](https://travis-ci.org/ibrahimbayer/talktome)
