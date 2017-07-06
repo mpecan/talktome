@@ -6,7 +6,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * {@link Entity} and {@link ApiModel} POJO class for user
@@ -37,7 +40,9 @@ public class User {
 
 	@Column(name = "name")
 	private String name;
+	@ApiModelProperty(hidden = true)
 	@Column(name = "password")
+	@JsonIgnore
 	private Character[] password;
 
 	public String getUserId() {

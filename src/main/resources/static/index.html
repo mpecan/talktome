@@ -2,56 +2,82 @@
 <html ng-app="talkToMe">
 <head>
 <title>Talk To Me</title>
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<link
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	rel="stylesheet">
+<link href="main.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+	integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+	crossorigin="anonymous"></script>
 <script
-  src="https://code.jquery.com/jquery-3.2.1.min.js"
-  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-  crossorigin="anonymous"></script>
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+	crossorigin="anonymous"></script>
 <script
 	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 <script
 	src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-resource.js"></script>
 <script
 	src="https://rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
 <script src="/app.js"></script>
+
 </head>
 <body>
-	<div class="container" ng-controller="ChatController">
-		<div class="row">
+	<div class="container" ng-controller="ChatController as $ctrl">
+		<div class="row" ng-if="!connected">
 			<div class="col-md-6">
 				<div class="form-group">
-					<label for="name">What is username?</label> <input type="text"
-						ng-model="fromName" class="form-control"
-						placeholder="Your username here...">
+				<label>Username</label><input class="formControl" ng-model="$ctrl.username"
+					placeholder="Your username to connect...." /> 
 				</div>
 				<div class="form-group">
-					<label for="name">What is username you want to chat?</label> <input type="text"
-						ng-model="toName" class="form-control"
-						placeholder="Who do you want to talk?">
+				<label>Chat with</label><input
+					class="formControl" ng-model="$ctrl.chatWith"
+					placeholder="Your user you want to chat" /> 
 				</div>
-				<div class="form-group">
-					<label for="connect">WebSocket connection:</label>
-					<button ng-disabled="connected == true" ng-click="connect()"
-						class="btn btn-default" type="submit">Connect</button>
-					<button ng-click="disconnect()" class="btn btn-default"
-						type="submit" ng-disabled="connected == false">Disconnect</button>
-				</div>
-			</div>
-			<div class="col-md-6">
-				<div class="form-group">
-					<label for="name">What is your message?</label> <input type="text"
-						ng-model="message.text" class="form-control"
-						placeholder="Your message here...">
-				</div>
-				<button ng-click="send()" class="btn btn-default" type="submit">Send</button>
+				
+				
+				<button class="btn btn-default" ng-click="connect()">Connect</button>
 			</div>
 		</div>
+
 		<div class="row">
-			<div class="col-md-12">
-				<ul ng-repeat="data in MyData.messages track by $index">
-					<li>{{ data }}</li>
+			<div class="chat_window">
+				<div class="top_menu">
+					<div class="buttons">
+						<div class="button maximize" ng-click="showModal=true"></div>
+					</div>
+
+					<div class="title">Chat {{user.name}}</div>
+				</div>
+				<ul class="messages">
+					<li class="message appeared" ng-class="data.from == $ctrl.user.name?'left':'right'"
+						ng-repeat="data in $ctrl.MyData.messages track by $index">
+						<div class="avatar">{{data.from | limitTo:3}}</div>
+						<div class="text_wrapper">
+							<div class="text">{{data.text}}</div>
+						</div>
+					</li>
+
 				</ul>
+				<div class="bottom_wrapper clearfix">
+					<div class="message_input_wrapper" ng-if="connected">
+						<input class="message_input" ng-model="$ctrl.message.text"
+							placeholder="Type your message here..." />
+					</div>
+					<div class="send_message" ng-click="send()" ng-if="connected">
+						<div class="icon"></div>
+						<div class="text">Send</div>
+					</div>
+				</div>
+			</div>
+			<div class="message_template">
+				<li class="message"><div class="avatar"></div>
+					<div class="text_wrapper">
+						<div class="text"></div>
+					</div></li>
 			</div>
 		</div>
 	</div>

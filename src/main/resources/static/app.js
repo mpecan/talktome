@@ -14,14 +14,15 @@ angular.module('talkToMe', [ 'ngWebSocket','ngResource' ])
 		stomp = Stomp.over(dataStream.socket);
 		var startListener = function() {
 			connected = true;
+			listener.notify(true);
 			stomp.subscribe('/topic/message', function(data) {
 				messages.push(JSON.parse(data.body));
-				listener.notify();
+				listener.notify(true);
 			});
 		};
 
 		stomp.connect({
-			'Login' : name,
+			login : name,
 			passcode : name,
 			'client-id' : name
 		}, startListener);
@@ -38,35 +39,38 @@ angular.module('talkToMe', [ 'ngWebSocket','ngResource' ])
 		});
 	};
 
-	
-
 	return {
 		messages : messages,
 		send : function(request) {
-			stomp.send('/app/message', {}, JSON.stringify(request));
+			stomp.send('/app/message', {}, request);
 		},
 		promise : listener.promise,
-		connect : connect,
-		connected : connected
+		connect : connect
 	};
 }).controller('ChatController', function($scope, MyData, $resource) {
-	
+	var controller = this;
+	$scope.connected = false;
 	var User = $resource('/users?name=:name',{});
-	$scope.message = {};
-	MyData.promise.then(function(){
+	controller.message = {};
+	MyData.promise.then(function(connected){
+		$scope.connected = true;
 		$scope.$apply();
-	});
+	},null, function(value) {
+		$scope.connected = value;
+    });
 	$scope.send = function() {
-		$scope.message.from = $scope.fromName;
-		$scope.message.to = $scope.toName;
-		$scope.MyData.send($scope.message);
+		controller.message.from = controller.username;
+		controller.message.to = controller.chatWith;
+		controller.MyData.send(JSON.stringify(controller.message));
+		controller.message.text = '';
 	};
 	$scope.connect = function(){
-		User.query({name : $scope.fromName},{},function(response){
-			console.log(response);
+		User.get({name : controller.username},{},function(response){
+			if (response["_embedded"].users && response["_embedded"].users.length > 0){
+				controller.user = response["_embedded"].users[0];
+			}
 		});
-		User.query({name : $scope.toName},{});
-		MyData.connect($scope.fromName);
+		MyData.connect(controller.username);
 	};
-	$scope.MyData = MyData;
+	controller.MyData = MyData;
 });
