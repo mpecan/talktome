@@ -13,7 +13,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
 
-public class TestUserService {
+public class UserServiceTest {
 	
 	@Spy
 	UserService userService;

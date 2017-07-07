@@ -19,7 +19,7 @@ import org.springframework.test.web.servlet.ResultActions;
 @WebAppConfiguration
 @SpringBootTest
 @AutoConfigureMockMvc(print = MockMvcPrint.NONE)
-public class TestSwaggerConfig {
+public class SwaggerConfigTest {
 
 	@Autowired
 	private MockMvc mockMvc;

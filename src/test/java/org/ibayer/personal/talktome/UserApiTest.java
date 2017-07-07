@@ -25,7 +25,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @SpringBootTest
 @WebAppConfiguration
 @AutoConfigureMockMvc(print = MockMvcPrint.NONE)
-public class TestUserApi {
+public class UserApiTest {
 
 	private ObjectMapper mapper = new ObjectMapper();
 

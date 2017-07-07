@@ -37,7 +37,6 @@ public class MessageController {
 	 * @return
 	 */
 	@MessageMapping("/message")
-	@SendTo("/topic/message")
 	public Message send(Message message) {
 		String time = LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE);
 		message.setTime(time);
